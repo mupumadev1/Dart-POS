@@ -1,0 +1,37 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+}
+
+android {
+    namespace = "com.example.pos_app"
+    compileSdk = 34
+    ndkVersion = "25.1.8937393"  // or remove this line
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
+    }
+    kotlinOptions {
+        jvmTarget = "21"
+    }
+
+    defaultConfig {
+        applicationId = "com.example.pos_app"
+        minSdk = 23  // Set specific value instead of flutter.minSdkVersion
+        targetSdk = 34  // Set specific value instead of flutter.targetSdkVersion
+        versionCode = 1  // Set specific value instead of flutter.versionCode
+        versionName = "1.0"  // Set specific value instead of flutter.versionName
+    }
+
+    buildTypes {
+        release {
+            signingConfig = signingConfigs.debug
+        }
+    }
+}
+
+flutter {
+    source = "../.."
+}
