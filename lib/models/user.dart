@@ -22,7 +22,7 @@ class User {
       fullName: json['full_name'],
       role: json['role'],
       isActive: json['is_active'] ?? true,
-      createdAt: DateTime.parse(json['created_at']),
+        createdAt:DateTime.now(),
     );
   }
 }

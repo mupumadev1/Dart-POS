@@ -23,6 +23,7 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
 
     try {
+
       _user = await _apiService.login(username, password);
       print(_user);
       return _user != null;

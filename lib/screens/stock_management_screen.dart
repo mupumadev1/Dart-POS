@@ -14,7 +14,6 @@ class _StockManagementScreenState extends State<StockManagementScreen> {
   String _searchQuery = '';
   String _selectedFilter = 'All';
   final List<String> _filterOptions = ['All', 'Low Stock', 'Out of Stock', 'Active', 'Inactive'];
-  final productProvider = Provider.of<ProductProvider>(context, listen: false);
 
   @override
   Widget build(BuildContext context) {
@@ -351,7 +350,9 @@ class _StockManagementScreenState extends State<StockManagementScreen> {
                   onPressed: () {
                     final quantity = int.tryParse(stockController.text);
                     if (quantity != null) {
-                      .updateStock(product.id, operationType, quantity, reasonController.text);
+                      // Access the ProductProvider through context
+                      final productProvider = Provider.of<ProductProvider>(context, listen: false);
+                      productProvider.updateStock(product.id,quantity);
                       Navigator.of(context).pop();
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Stock updated successfully')),

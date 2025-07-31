@@ -88,7 +88,7 @@ class CartProvider with ChangeNotifier {
   Future<bool> processSale(int userId) async {
     if (_items.isEmpty) return false;
 
-    final receiptNumber = 'R${DateTime.now().millisecondsSinceEpoch}';
+    final receiptNumber = 'K${DateTime.now().millisecondsSinceEpoch}';
 
     final sale = Sale(
       receiptNumber: receiptNumber,

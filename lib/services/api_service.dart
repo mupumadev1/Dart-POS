@@ -22,6 +22,9 @@ class ApiService {
         }),
       );
 
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         _token = data['token'];  // Use underscore, not asterisk
@@ -31,9 +34,13 @@ class ApiService {
         await prefs.setString('auth_token', _token!); // Use underscore, not asterisk
 
         return User.fromJson(data['user']);
+      } else {
+        // Handle different error status codes
+        final errorData = json.decode(response.body);
+        throw Exception(errorData['message'] ?? 'Login failed');
       }
-      return null;
     } catch (e) {
+      print('Login error: $e');
       throw Exception('Login failed: $e');
     }
   }
