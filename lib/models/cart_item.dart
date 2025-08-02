@@ -21,4 +21,7 @@ class CartItem {
       'total_price': totalPrice,
     };
   }
+  factory CartItem.fromJson(Map<String, dynamic> json) {
+    return CartItem(productId: json['productId'], productName: json['productName'], unitPrice: json['unitPrice'], quantity: json['quantity']);
+  }
 }

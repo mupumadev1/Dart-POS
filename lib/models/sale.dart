@@ -16,6 +16,17 @@ class Sale {
   final List<CartItem> items;
   final String? notes;
 
+  // New fields from Sequelize model
+  final String? invNumber;
+  final String? receiptNo;
+  final String? sdcId;
+  final String? receiptSig;
+  final String? intrlData;
+  final String? qrCode;
+  final String? vsdcrcpDate;
+  final String? invoiceNo;
+  final String? qrFilePath;
+
   Sale({
     this.id,
     required this.receiptNumber,
@@ -31,10 +42,21 @@ class Sale {
     required this.changeAmount,
     required this.items,
     this.notes,
+    // New fields
+    this.invNumber,
+    this.receiptNo,
+    this.sdcId,
+    this.receiptSig,
+    this.intrlData,
+    this.qrCode,
+    this.vsdcrcpDate,
+    this.invoiceNo,
+    this.qrFilePath,
   });
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'receipt_number': receiptNumber,
       'user_id': userId,
       'customer_id': customerId,
@@ -48,6 +70,46 @@ class Sale {
       'change_amount': changeAmount,
       'items': items.map((item) => item.toJson()).toList(),
       'notes': notes,
+      // New fields
+      'INVNUMBER': invNumber,
+      'RECEIPTNO': receiptNo,
+      'SDCID': sdcId,
+      'RECEIPTSIG': receiptSig,
+      'INTRLDATA': intrlData,
+      'QRCODE': qrCode,
+      'VSDCRCPDATE': vsdcrcpDate,
+      'INVOICENO': invoiceNo,
+      'QRFILEPATH': qrFilePath,
     };
   }
+  factory Sale.fromJson(Map<String, dynamic> json) {
+    return Sale(
+      id: json['id'],
+      receiptNumber: json['receipt_number'],
+      userId: json['user_id'],
+      customerId: json['customer_id'],
+      subtotal: (json['subtotal'] as num).toDouble(),
+      discountId: json['discount_id'],
+      discountAmount: (json['discount_amount'] as num).toDouble(),
+      taxAmount: (json['tax_amount'] as num).toDouble(),
+      totalAmount: (json['total_amount'] as num).toDouble(),
+      paymentMethod: json['payment_method'],
+      amountPaid: (json['amount_paid'] as num).toDouble(),
+      changeAmount: (json['change_amount'] as num).toDouble(),
+      items: (json['items'] as List<dynamic>)
+          .map((item) => CartItem.fromJson(item))
+          .toList(),
+      notes: json['notes'],
+      invNumber: json['INVNUMBER'],
+      receiptNo: json['RECEIPTNO'],
+      sdcId: json['SDCID'],
+      receiptSig: json['RECEIPTSIG'],
+      intrlData: json['INTRLDATA'],
+      qrCode: json['QRCODE'],
+      vsdcrcpDate: json['VSDCRCPDATE'],
+      invoiceNo: json['INVOICENO'],
+      qrFilePath: json['QRFILEPATH'],
+    );
+  }
+
 }

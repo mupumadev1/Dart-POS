@@ -18,29 +18,97 @@ class _StockManagementScreenState extends State<StockManagementScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Stock Management'),
-        backgroundColor: Theme.of(context).primaryColor,
-        foregroundColor: Colors.white,
+      backgroundColor: const Color(0xFFF8FAFC),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(70),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color(0xFF2196F3),
+                Color(0xFF1976D2),
+              ],
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.blue.withOpacity(0.3),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: AppBar(
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            foregroundColor: Colors.white,
+            title: Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.25),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Icon(
+                    Icons.inventory_2,
+                    size: 22,
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                const Text(
+                  'Stock Management',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
       body: Column(
         children: [
-          // Search and Filter Section
+          // Search and Filter Section with blue theme
           Container(
             padding: const EdgeInsets.all(16.0),
-            color: Colors.grey[100],
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.blue.withOpacity(0.1),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
             child: Column(
               children: [
-                // Search Bar
+                // Search Bar with blue accent
                 TextField(
                   decoration: InputDecoration(
                     hintText: 'Search products...',
-                    prefixIcon: const Icon(Icons.search),
+                    hintStyle: TextStyle(color: Colors.grey[400]),
+                    prefixIcon: Icon(Icons.search, color: Colors.blue[600]),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
+                      borderRadius: BorderRadius.circular(12.0),
+                      borderSide: BorderSide(color: Colors.grey[300]!),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                      borderSide: const BorderSide(color: Color(0xFF2196F3), width: 2),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                      borderSide: BorderSide(color: Colors.grey[300]!),
                     ),
                     filled: true,
-                    fillColor: Colors.white,
+                    fillColor: const Color(0xFFF8FAFC),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                   ),
                   onChanged: (value) {
                     setState(() {
@@ -48,26 +116,47 @@ class _StockManagementScreenState extends State<StockManagementScreen> {
                     });
                   },
                 ),
-                const SizedBox(height: 12),
-                // Filter Dropdown
+                const SizedBox(height: 16),
+                // Filter Dropdown with blue theme
                 Row(
                   children: [
-                    const Text('Filter: ', style: TextStyle(fontWeight: FontWeight.bold)),
+                    Icon(Icons.filter_list, color: Colors.blue[600], size: 20),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Filter: ',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.grey[700],
+                      ),
+                    ),
                     Expanded(
-                      child: DropdownButton<String>(
-                        value: _selectedFilter,
-                        isExpanded: true,
-                        items: _filterOptions.map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            _selectedFilter = newValue!;
-                          });
-                        },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFF8FAFC),
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.grey[300]!),
+                        ),
+                        child: DropdownButton<String>(
+                          value: _selectedFilter,
+                          isExpanded: true,
+                          underline: Container(),
+                          dropdownColor: Colors.white,
+                          items: _filterOptions.map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(
+                                value,
+                                style: TextStyle(color: Colors.grey[700]),
+                              ),
+                            );
+                          }).toList(),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              _selectedFilter = newValue!;
+                            });
+                          },
+                        ),
                       ),
                     ),
                   ],
@@ -82,15 +171,39 @@ class _StockManagementScreenState extends State<StockManagementScreen> {
                 final filteredProducts = _getFilteredProducts(productProvider.products);
 
                 if (filteredProducts.isEmpty) {
-                  return const Center(
-                    child: Text(
-                      'No products found',
-                      style: TextStyle(fontSize: 18, color: Colors.grey),
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.inventory_2_outlined,
+                          size: 64,
+                          color: Colors.blue[300],
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          'No products found',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.grey[600],
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          'Try adjusting your search or filter',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey[400],
+                          ),
+                        ),
+                      ],
                     ),
                   );
                 }
 
                 return ListView.builder(
+                  padding: const EdgeInsets.all(8),
                   itemCount: filteredProducts.length,
                   itemBuilder: (context, index) {
                     final product = filteredProducts[index];
@@ -102,10 +215,25 @@ class _StockManagementScreenState extends State<StockManagementScreen> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _showAddProductDialog(context),
-        child: const Icon(Icons.add),
-        tooltip: 'Add Product',
+      floatingActionButton: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xFF2196F3).withOpacity(0.4),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: FloatingActionButton(
+          onPressed: () => _showAddProductDialog(context),
+          backgroundColor: const Color(0xFF2196F3),
+          foregroundColor: Colors.white,
+          elevation: 0,
+          child: const Icon(Icons.add, size: 24),
+          tooltip: 'Add Product',
+        ),
       ),
     );
   }
@@ -141,19 +269,37 @@ class _StockManagementScreenState extends State<StockManagementScreen> {
   }
 
   Widget _buildProductCard(BuildContext context, Product product) {
-    Color stockColor = Colors.green;
+    Color stockColor = const Color(0xFF4CAF50); // Green
     String stockStatus = 'In Stock';
+    IconData stockIcon = Icons.check_circle;
 
     if (product.stockQuantity == 0) {
-      stockColor = Colors.red;
+      stockColor = const Color(0xFFE53E3E); // Red
       stockStatus = 'Out of Stock';
+      stockIcon = Icons.cancel;
     } else if (product.isLowStock) {
-      stockColor = Colors.orange;
+      stockColor = const Color(0xFFFF9800); // Orange
       stockStatus = 'Low Stock';
+      stockIcon = Icons.warning;
     }
 
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.blue.withOpacity(0.08),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+        border: Border.all(
+          color: Colors.blue.withOpacity(0.1),
+          width: 1,
+        ),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -168,41 +314,56 @@ class _StockManagementScreenState extends State<StockManagementScreen> {
                     children: [
                       Text(
                         product.name,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
+                          color: Colors.grey[800],
                         ),
                       ),
                       if (product.description != null)
-                        Text(
-                          product.description!,
-                          style: TextStyle(
-                            color: Colors.grey[600],
-                            fontSize: 14,
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4),
+                          child: Text(
+                            product.description!,
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                              fontSize: 14,
+                            ),
                           ),
                         ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'Category: ${product.category?.name ?? 'Uncategorized'}',
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                          fontSize: 12,
+                      const SizedBox(height: 6),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: Colors.blue[50],
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.blue[200]!),
+                        ),
+                        child: Text(
+                          product.category?.name ?? 'Uncategorized',
+                          style: TextStyle(
+                            color: Colors.blue[700],
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: stockColor.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: stockColor),
-                      ),
-                      child: Text(
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: stockColor.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: stockColor.withOpacity(0.3)),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(stockIcon, color: stockColor, size: 16),
+                      const SizedBox(width: 4),
+                      Text(
                         stockStatus,
                         style: TextStyle(
                           color: stockColor,
@@ -210,52 +371,92 @@ class _StockManagementScreenState extends State<StockManagementScreen> {
                           fontSize: 12,
                         ),
                       ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: const Color(0xFFF8FAFC),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Colors.blue.withOpacity(0.1)),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: _buildInfoItem('Stock', '${product.stockQuantity}', Icons.inventory_2, Colors.blue[600]!),
+                  ),
+                  Expanded(
+                    child: _buildInfoItem('Min Level', '${product.minStockLevel}', Icons.trending_down, Colors.blue[600]!),
+                  ),
+                  Expanded(
+                    child: _buildInfoItem('Price', '\$${product.price.toStringAsFixed(2)}', Icons.attach_money, Colors.green[600]!),
+                  ),
+                  Expanded(
+                    child: _buildInfoItem('Cost', '\$${product.cost.toStringAsFixed(2)}', Icons.receipt, Colors.orange[600]!),
+                  ),
+                ],
+              ),
+            ),
+            if (product.barcode != null) ...[
+              const SizedBox(height: 12),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                decoration: BoxDecoration(
+                  color: Colors.blue[50],
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  children: [
+                    Icon(Icons.qr_code, color: Colors.blue[600], size: 16),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Barcode: ${product.barcode}',
+                      style: TextStyle(
+                        color: Colors.blue[700],
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ],
                 ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(
-                  child: _buildInfoItem('Stock', '${product.stockQuantity}'),
-                ),
-                Expanded(
-                  child: _buildInfoItem('Min Level', '${product.minStockLevel}'),
-                ),
-                Expanded(
-                  child: _buildInfoItem('Price', '\$${product.price.toStringAsFixed(2)}'),
-                ),
-                Expanded(
-                  child: _buildInfoItem('Cost', '\$${product.cost.toStringAsFixed(2)}'),
-                ),
-              ],
-            ),
-            if (product.barcode != null) ...[
-              const SizedBox(height: 8),
-              Text(
-                'Barcode: ${product.barcode}',
-                style: TextStyle(
-                  color: Colors.grey[600],
-                  fontSize: 12,
-                ),
               ),
             ],
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                TextButton.icon(
-                  onPressed: () => _showUpdateStockDialog(context, product),
-                  icon: const Icon(Icons.inventory, size: 16),
-                  label: const Text('Update Stock'),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.blue[50],
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: TextButton.icon(
+                    onPressed: () => _showUpdateStockDialog(context, product),
+                    icon: Icon(Icons.inventory, size: 16, color: Colors.blue[600]),
+                    label: Text(
+                      'Update Stock',
+                      style: TextStyle(color: Colors.blue[600], fontWeight: FontWeight.w600),
+                    ),
+                  ),
                 ),
                 const SizedBox(width: 8),
-                TextButton.icon(
-                  onPressed: () => _showEditProductDialog(context, product),
-                  icon: const Icon(Icons.edit, size: 16),
-                  label: const Text('Edit'),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.blue[50],
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: TextButton.icon(
+                    onPressed: () => _showEditProductDialog(context, product),
+                    icon: Icon(Icons.edit, size: 16, color: Colors.blue[600]),
+                    label: Text(
+                      'Edit',
+                      style: TextStyle(color: Colors.blue[600], fontWeight: FontWeight.w600),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -265,22 +466,27 @@ class _StockManagementScreenState extends State<StockManagementScreen> {
     );
   }
 
-  Widget _buildInfoItem(String label, String value) {
+  Widget _buildInfoItem(String label, String value, IconData icon, Color color) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        Icon(icon, color: color, size: 20),
+        const SizedBox(height: 4),
         Text(
           label,
           style: TextStyle(
-            fontSize: 12,
+            fontSize: 11,
             color: Colors.grey[600],
+            fontWeight: FontWeight.w500,
           ),
         ),
+        const SizedBox(height: 2),
         Text(
           value,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.bold,
+            color: Colors.grey[800],
           ),
         ),
       ],
@@ -290,7 +496,7 @@ class _StockManagementScreenState extends State<StockManagementScreen> {
   void _showUpdateStockDialog(BuildContext context, Product product) {
     final TextEditingController stockController = TextEditingController();
     final TextEditingController reasonController = TextEditingController();
-    String operationType = 'add'; // 'add' or 'remove'
+    String operationType = 'add';
 
     showDialog(
       context: context,
@@ -298,17 +504,69 @@ class _StockManagementScreenState extends State<StockManagementScreen> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: Text('Update Stock - ${product.name}'),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              title: Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.blue[100],
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Icon(Icons.inventory, color: Colors.blue[600], size: 20),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      'Update Stock',
+                      style: TextStyle(color: Colors.grey[800], fontSize: 18),
+                    ),
+                  ),
+                ],
+              ),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Current Stock: ${product.stockQuantity}'),
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.blue[50],
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      children: [
+                        Text(
+                          product.name,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: Colors.blue[700],
+                          ),
+                        ),
+                        const Spacer(),
+                        Text(
+                          'Current: ${product.stockQuantity}',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue[600],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   const SizedBox(height: 16),
                   DropdownButtonFormField<String>(
                     value: operationType,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'Operation',
-                      border: OutlineInputBorder(),
+                      labelStyle: TextStyle(color: Colors.blue[600]),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(color: Color(0xFF2196F3), width: 2),
+                      ),
                     ),
                     items: const [
                       DropdownMenuItem(value: 'add', child: Text('Add Stock')),
@@ -326,16 +584,32 @@ class _StockManagementScreenState extends State<StockManagementScreen> {
                     controller: stockController,
                     decoration: InputDecoration(
                       labelText: operationType == 'set' ? 'New Stock Level' : 'Quantity',
-                      border: const OutlineInputBorder(),
+                      labelStyle: TextStyle(color: Colors.blue[600]),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(color: Color(0xFF2196F3), width: 2),
+                      ),
+                      prefixIcon: Icon(Icons.numbers, color: Colors.blue[600]),
                     ),
                     keyboardType: TextInputType.number,
                   ),
                   const SizedBox(height: 16),
                   TextField(
                     controller: reasonController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'Reason (Optional)',
-                      border: OutlineInputBorder(),
+                      labelStyle: TextStyle(color: Colors.blue[600]),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(color: Color(0xFF2196F3), width: 2),
+                      ),
+                      prefixIcon: Icon(Icons.note, color: Colors.blue[600]),
                     ),
                     maxLines: 2,
                   ),
@@ -344,21 +618,43 @@ class _StockManagementScreenState extends State<StockManagementScreen> {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('Cancel'),
+                  child: Text(
+                    'Cancel',
+                    style: TextStyle(color: Colors.grey[600]),
+                  ),
                 ),
                 ElevatedButton(
                   onPressed: () {
                     final quantity = int.tryParse(stockController.text);
                     if (quantity != null) {
-                      // Access the ProductProvider through context
                       final productProvider = Provider.of<ProductProvider>(context, listen: false);
-                      productProvider.updateStock(product.id,quantity);
+                      productProvider.updateStock(product.id, quantity);
                       Navigator.of(context).pop();
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Stock updated successfully')),
+                        SnackBar(
+                          content: Row(
+                            children: [
+                              const Icon(Icons.check_circle, color: Colors.white),
+                              const SizedBox(width: 8),
+                              const Text('Stock updated successfully'),
+                            ],
+                          ),
+                          backgroundColor: Colors.blue[600],
+                          behavior: SnackBarBehavior.floating,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
                       );
                     }
                   },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF2196F3),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
                   child: const Text('Update'),
                 ),
               ],
@@ -370,18 +666,39 @@ class _StockManagementScreenState extends State<StockManagementScreen> {
   }
 
   void _showEditProductDialog(BuildContext context, Product product) {
-    // This would open a full product editing dialog
-    // For now, just show a placeholder
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Edit ${product.name}'),
-          content: const Text('Product editing dialog would go here'),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          title: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.blue[100],
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(Icons.edit, color: Colors.blue[600], size: 20),
+              ),
+              const SizedBox(width: 12),
+              Text(
+                'Edit Product',
+                style: TextStyle(color: Colors.grey[800]),
+              ),
+            ],
+          ),
+          content: Text(
+            'Product editing dialog would go here for: ${product.name}',
+            style: TextStyle(color: Colors.grey[600]),
+          ),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Close'),
+              child: Text(
+                'Close',
+                style: TextStyle(color: Colors.blue[600]),
+              ),
             ),
           ],
         );
@@ -390,17 +707,39 @@ class _StockManagementScreenState extends State<StockManagementScreen> {
   }
 
   void _showAddProductDialog(BuildContext context) {
-    // This would open a dialog to add a new product
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Add New Product'),
-          content: const Text('Add product dialog would go here'),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          title: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.blue[100],
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(Icons.add_box, color: Colors.blue[600], size: 20),
+              ),
+              const SizedBox(width: 12),
+              Text(
+                'Add New Product',
+                style: TextStyle(color: Colors.grey[800]),
+              ),
+            ],
+          ),
+          content: Text(
+            'Add product dialog would go here',
+            style: TextStyle(color: Colors.grey[600]),
+          ),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Close'),
+              child: Text(
+                'Close',
+                style: TextStyle(color: Colors.blue[600]),
+              ),
             ),
           ],
         );
