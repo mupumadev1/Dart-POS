@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:pos_app/services/product_service.dart';
 import '../models/product.dart';
 import '../models/category.dart';
@@ -7,6 +8,7 @@ import '../services/api_service.dart';
 
 class ProductProvider with ChangeNotifier {
   List<Product> _products = [];
+  List<Product> get products => [..._products];
   List<Category> _categories = [];
   List<Product> _lowStockProducts = [];
   bool _isLoading = false;
@@ -70,6 +72,110 @@ class ProductProvider with ChangeNotifier {
       notifyListeners();
     }
   }
+  ProductProvider() {
+    // Initialize with dummy products when the provider is created
+    _loadDummyProducts();
+  }
+
+  void _loadDummyProducts() {
+    // Define some dummy categories if your Product model uses them
+    final electronicsCategory = Category(id: 'cat1', name: 'Electronics');
+    final booksCategory = Category(id: 'cat2', name: 'Books');
+    final clothingCategory = Category(id: 'cat3', name: 'Clothing');
+
+    _products = [
+      Product(
+        id: 'p1',
+        name: 'Laptop Pro 15"',
+        description: 'High-performance laptop for professionals.',
+        price: 1299.99,
+        cost: 950.00,
+        stockQuantity: 15,
+        minStockLevel: 5,
+        category: electronicsCategory,
+        barcode: '1234567890123',
+        isActive: true,
+        lastRestocked: DateTime.now().subtract(const Duration(days: 10)),
+        // isLowStock will be calculated by the getter in the Product model
+      ),
+      Product(
+        id: 'p2',
+        name: 'Wireless Mouse',
+        description: 'Ergonomic wireless mouse with long battery life.',
+        price: 25.99,
+        cost: 12.00,
+        stockQuantity: 3, // Low stock example
+        minStockLevel: 10,
+        category: electronicsCategory,
+        barcode: '2345678901234',
+        isActive: true,
+        lastRestocked: DateTime.now().subtract(const Duration(days: 5)),
+      ),
+      Product(
+        id: 'p3',
+        name: 'Flutter Cookbook',
+        description: 'Learn Flutter development with practical examples.',
+        price: 39.99,
+        cost: 20.00,
+        stockQuantity: 0, // Out of stock example
+        minStockLevel: 5,
+        category: booksCategory,
+        barcode: '3456789012345',
+        isActive: true,
+        lastRestocked: DateTime.now().subtract(const Duration(days: 30)),
+      ),
+      Product(
+        id: 'p4',
+        name: 'Men\'s T-Shirt',
+        description: 'Comfortable cotton t-shirt.',
+        price: 19.99,
+        cost: 8.00,
+        stockQuantity: 50,
+        minStockLevel: 15,
+        category: clothingCategory,
+        barcode: '4567890123456',
+        isActive: false, // Inactive example
+        lastRestocked: DateTime.now().subtract(const Duration(days: 20)),
+      ),
+      Product(
+        id: 'p5',
+        name: 'Smartphone X',
+        description: 'Latest generation smartphone with amazing camera.',
+        price: 799.00,
+        cost: 550.00,
+        stockQuantity: 22,
+        minStockLevel: 10,
+        category: electronicsCategory,
+        barcode: '5678901234567',
+        isActive: true,
+        lastRestocked: DateTime.now().subtract(const Duration(days: 3)),
+      ),
+    ];
+    notifyListeners(); // Notify listeners that the products list has changed
+  }
+  void updateStock(String productId, int newQuantity, {String? reason}) { // Added reason as optional
+    try {
+      final productIndex = _products.indexWhere((prod) => prod.id == productId);
+      if (productIndex >= 0) {
+        // Here you might want to adjust based on operationType if you re-introduce it
+        // For now, assuming newQuantity is the absolute new stock.
+        _products[productIndex].stockQuantity = newQuantity;
+        _products[productIndex].lastRestocked = DateTime.now(); // Update last restocked
+        // You might also log the reason and operationType if needed
+        notifyListeners();
+      }
+    } catch (error) {
+      // Handle error appropriately
+      print('Error updating stock: $error');
+    }
+  }
+
+  // Add other methods like addProduct, editProduct, deleteProduct as needed
+  void addProduct(Product product) {
+    _products.add(product);
+    notifyListeners();
+  }
+}
 
   // Products - Simple load (your existing method)
   Future<void> loadProducts({int? categoryId}) async {

@@ -2,6 +2,7 @@ import 'category.dart';
 
 class Product {
   final int id;
+  final String id;
   final String name;
   final String? description;
   final double price;
@@ -11,6 +12,8 @@ class Product {
   final int stockQuantity;
   final int minStockLevel;
   final bool isActive;
+  final String? barcode;
+  final DateTime? lastRestocked;
   final Category? category;
 
   Product({
@@ -21,9 +24,11 @@ class Product {
     required this.cost,
     this.barcode,
     this.categoryId,
+    this.barcode,
     required this.stockQuantity,
     required this.minStockLevel,
     required this.isActive,
+    this.lastRestocked,
     this.category,
   });
 
