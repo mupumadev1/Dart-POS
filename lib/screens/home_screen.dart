@@ -286,7 +286,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         radius: 16,
                         backgroundColor: Colors.white,
                         child: Text(
-                          auth.user?.fullName?.substring(0, 1).toUpperCase() ?? 'U',
+                          auth.user?.fullName.substring(0, 1).toUpperCase() ?? 'U',
                           style: TextStyle(
                             color: Colors.blue[600],
                             fontWeight: FontWeight.bold,

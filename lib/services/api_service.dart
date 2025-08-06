@@ -3,7 +3,6 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/paginated_sales_result.dart';
 import '../models/user.dart';
-import '../models/product.dart';
 import '../models/category.dart';
 import '../models/sale.dart';
 

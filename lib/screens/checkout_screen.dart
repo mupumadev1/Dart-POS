@@ -60,8 +60,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     child: Column(
                       children: [
                         const Text('DAPP', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                        Text('Location: ${auth.user?.storeLocation ?? ''}', style: const TextStyle(fontSize: 12)),
-                        Text('Phone: ${auth.user?.storeMobileNo ?? ''}', style: const TextStyle(fontSize: 12)),
+                        Text('Location: ${auth.user?.store?.storeLocation ?? ''}', style: const TextStyle(fontSize: 12)),
+                        Text('Phone: ${auth.user?.store?.storeMobileNo ?? ''}', style: const TextStyle(fontSize: 12)),
                       ],
                     ),
                   ),
