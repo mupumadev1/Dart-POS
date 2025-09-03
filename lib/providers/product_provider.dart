@@ -366,8 +366,8 @@ class ProductProvider with ChangeNotifier {
     if (_searchQuery.isNotEmpty) {
       final query = _searchQuery.toLowerCase();
       final matchesName = product.name.toLowerCase().contains(query);
-      final matchesBarcode = product.barcode?.toLowerCase().contains(query) ?? false;
-      if (!matchesName && !matchesBarcode) return false;
+      final matchesClassCode= product.productClassCode?.toLowerCase().contains(query) ?? false;
+      if (!matchesName && !matchesClassCode) return false;
     }
 
     return true;

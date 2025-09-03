@@ -52,7 +52,7 @@ class _PreviousSalesScreenState extends State<PreviousSalesScreen> with TickerPr
             children: [
               const Icon(Icons.error, color: Colors.white),
               const SizedBox(width: 8),
-              Text('$e'),
+
             ],
           ),
           backgroundColor: Colors.red[600],

@@ -246,7 +246,7 @@ class _StockManagementScreenState extends State<StockManagementScreen> {
       filtered = filtered.where((product) =>
       product.name.toLowerCase().contains(_searchQuery) ||
           (product.description?.toLowerCase().contains(_searchQuery) ?? false) ||
-          (product.barcode?.toLowerCase().contains(_searchQuery) ?? false)).toList();
+          (product.productClassCode?.toLowerCase().contains(_searchQuery) ?? false)).toList();
     }
 
     // Apply category filter
@@ -401,7 +401,7 @@ class _StockManagementScreenState extends State<StockManagementScreen> {
                 ],
               ),
             ),
-            if (product.barcode != null) ...[
+            if (product.productClassCode != null) ...[
               const SizedBox(height: 12),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -414,7 +414,7 @@ class _StockManagementScreenState extends State<StockManagementScreen> {
                     Icon(Icons.qr_code, color: Colors.blue[600], size: 16),
                     const SizedBox(width: 8),
                     Text(
-                      'Barcode: ${product.barcode}',
+                      'Class code: ${product.productClassCode}',
                       style: TextStyle(
                         color: Colors.blue[700],
                         fontSize: 12,

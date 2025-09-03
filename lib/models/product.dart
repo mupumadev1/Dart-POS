@@ -6,7 +6,8 @@ class Product {
   final String? description;
   final double price;
   final double cost;
-  final String? barcode;
+  final String? productClassCode;
+  final String? productCode;
   final int? categoryId;
   final int stockQuantity;
   final int minStockLevel;
@@ -19,7 +20,8 @@ class Product {
     this.description,
     required this.price,
     required this.cost,
-    this.barcode,
+    this.productClassCode,
+    this.productCode,
     this.categoryId,
     required this.stockQuantity,
     required this.minStockLevel,
@@ -34,7 +36,8 @@ class Product {
       description: json['description'],
       price: double.parse(json['price'].toString()),
       cost: double.parse(json['cost'].toString()),
-      barcode: json['barcode'],
+      productClassCode: json['product_class_code'],
+      productCode: json['product_code'],
       categoryId: json['category_id'],
       stockQuantity: json['stock_quantity'] ?? 0,
       minStockLevel: json['min_stock_level'] ?? 0,
@@ -49,7 +52,8 @@ class Product {
       'description': description,
       'price': price,
       'cost': cost,
-      'barcode': barcode,
+      'product_class_code':productClassCode,
+      'product_code':productCode,
       'category_id': categoryId,
       'stock_quantity': stockQuantity,
       'min_stock_level': minStockLevel,

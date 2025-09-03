@@ -22,7 +22,7 @@ class Sale {
   final String? sdcId;
   final String? receiptSig;
   final String? intrlData;
-  final String? qrCode;
+  final String? qrCodeUrl;
   final String? vsdcrcpDate;
   final String? invoiceNo;
   final String? qrFilePath;
@@ -48,7 +48,7 @@ class Sale {
     this.sdcId,
     this.receiptSig,
     this.intrlData,
-    this.qrCode,
+    this.qrCodeUrl,
     this.vsdcrcpDate,
     this.invoiceNo,
     this.qrFilePath,
@@ -71,15 +71,15 @@ class Sale {
       'items': items.map((item) => item.toJson()).toList(),
       'notes': notes,
       // New fields
-      'INVNUMBER': invNumber,
-      'RECEIPTNO': receiptNo,
-      'SDCID': sdcId,
-      'RECEIPTSIG': receiptSig,
-      'INTRLDATA': intrlData,
-      'QRCODE': qrCode,
-      'VSDCRCPDATE': vsdcrcpDate,
-      'INVOICENO': invoiceNo,
-      'QRFILEPATH': qrFilePath,
+      'invnumber': invNumber,
+      'receipt_no': receiptNo,
+      'sdcid': sdcId,
+      'receiptsig': receiptSig,
+      'intrldata': intrlData,
+      'qrcode_url': qrCodeUrl,
+      'vsdcrcpdate': vsdcrcpDate,
+      'invoice_no': invoiceNo,
+      'qrfilepath': qrFilePath,
     };
   }
   factory Sale.fromJson(Map<String, dynamic> json) {
@@ -100,15 +100,15 @@ class Sale {
           .map((item) => CartItem.fromJson(item))
           .toList(),
       notes: json['notes'],
-      invNumber: json['INVNUMBER'],
-      receiptNo: json['RECEIPTNO'],
-      sdcId: json['SDCID'],
-      receiptSig: json['RECEIPTSIG'],
-      intrlData: json['INTRLDATA'],
-      qrCode: json['QRCODE'],
-      vsdcrcpDate: json['VSDCRCPDATE'],
-      invoiceNo: json['INVOICENO'],
-      qrFilePath: json['QRFILEPATH'],
+      invNumber: json['invnumber'],
+      receiptNo: json['receipt_no'],
+      sdcId: json['sdcid'],
+      receiptSig: json['receiptsig'],
+      intrlData: json['intrldata'],
+      qrCodeUrl: json['qrcode_url'],
+      vsdcrcpDate: json['vsdcrcpdate'],
+      invoiceNo: json['invoice_no'],
+      qrFilePath: json['qrfilepath'],
     );
   }
 
